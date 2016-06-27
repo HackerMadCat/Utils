@@ -1,6 +1,6 @@
 package com.buginc.java.math.geometry;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 //** ** Created by DeveloperHacker ** **//
@@ -14,11 +14,11 @@ public class Polygon {
 
     public Polygon(Vector position, List<Vector> outline) {
         this.position = position;
-        this.outline = new LinkedList<>(outline);
+        this.outline = new ArrayList<>(outline);
     }
 
     public static Polygon rectangle(Vector position, Vector dimension) {
-        List<Vector> outline = new LinkedList<>();
+        List<Vector> outline = new ArrayList<>();
         outline.add(new Vector(dimension.x(), 0.0));
         outline.add(new Vector(0.0, dimension.y()));
         outline.add(new Vector(-dimension.x(), 0.0));
@@ -27,7 +27,7 @@ public class Polygon {
     }
 
     public static Polygon rectangle(double x, double y, double width, double height) {
-        List<Vector> outline = new LinkedList<>();
+        List<Vector> outline = new ArrayList<>();
         outline.add(new Vector(width, 0.0));
         outline.add(new Vector(0.0, height));
         outline.add(new Vector(-width, 0.0));
@@ -36,7 +36,7 @@ public class Polygon {
     }
 
     public static Polygon rectangle(int x, int y, int width, int height) {
-        List<Vector> outline = new LinkedList<>();
+        List<Vector> outline = new ArrayList<>();
         outline.add(new Vector(width, 0));
         outline.add(new Vector(0, height));
         outline.add(new Vector(-width, 0));
@@ -45,7 +45,7 @@ public class Polygon {
     }
 
     public static Polygon rightFigure(Vector center, double radius, int qVertex, double theta) {
-        List<Vector> outline = new LinkedList<>();
+        List<Vector> outline = new ArrayList<>();
         Vector prevRadius = new Vector(0.0, -radius).rtt(theta);
         for (int i = 0; i < qVertex; i++) {
             Vector nextRadius = prevRadius.rtt(Math.PI * 2.0 / qVertex);
@@ -133,7 +133,7 @@ public class Polygon {
      */
     public Polygon inc(Vector origin, double a) {
         Vector position = origin.add(this.position.rem(origin).inc(a));
-        List<Vector> outline = new LinkedList<>();
+        List<Vector> outline = new ArrayList<>();
         for (Vector vector : this.outline) outline.add(vector.inc(a));
         return new Polygon(position, outline);
     }
@@ -143,7 +143,7 @@ public class Polygon {
      */
     public Polygon dec(Vector origin, double a) {
         Vector position = origin.add(this.position.rem(origin).dec(a));
-        List<Vector> outline = new LinkedList<>();
+        List<Vector> outline = new ArrayList<>();
         for (Vector vector : this.outline) outline.add(vector.dec(a));
         return new Polygon(position, outline);
     }
@@ -153,17 +153,17 @@ public class Polygon {
      */
     public Polygon rtt(Vector origin, double theta) {
         Vector position = (this.position.rem(origin)).rtt(theta).add(origin);
-        List<Vector> outline = new LinkedList<>();
+        List<Vector> outline = new ArrayList<>();
         for (Vector vector : outline) outline.add(vector.rtt(theta));
         return new Polygon(position, outline);
     }
 
     public List<Vector> outline() {
-        return new LinkedList<>(outline);
+        return new ArrayList<>(outline);
     }
 
     public List<Vector> points() {
-        List<Vector> points = new LinkedList<>();
+        List<Vector> points = new ArrayList<>();
         Vector prev = position;
         for (Vector vector : outline) {
             points.add(prev);
