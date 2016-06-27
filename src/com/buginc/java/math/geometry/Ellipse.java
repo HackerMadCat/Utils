@@ -7,51 +7,22 @@ import java.util.Map;
 //** ** Created by DeveloperHacker ** **//
 //* https://github.com/DeveloperHacker *//
 
-public class Ellipse {
-
-    private final Vector position;
-    private final Vector dimension;
+public class Ellipse extends Figure {
 
     public Ellipse(Rectangle rectangle) {
-        this.position = rectangle.position();
-        this.dimension = rectangle.dimension();
+        super(rectangle.position(), rectangle.dimension());
     }
 
     public Ellipse(Vector position, Vector dimension) {
-        this.position = position;
-        this.dimension = dimension;
+        super(position, dimension);
     }
 
     public Ellipse(double x, double y, double width, double height) {
-        this.position = new Vector(x, y);
-        this.dimension = new Vector(width, height);
+        super(new Vector(x, y), new Vector(width, height));
     }
 
     public Ellipse(int x, int y, int width, int height) {
-        this.position = new Vector(x, y);
-        this.dimension = new Vector(width, height);
-    }
-
-    /**
-     * @return the displaced ellipse
-     */
-    public Ellipse mve(Vector position) {
-        return new Ellipse(position, dimension);
-    }
-
-    /**
-     * @return a ellipse of an increased 'a' times
-     */
-    public Ellipse inc(double a) {
-        return new Ellipse(position, dimension.inc(a));
-    }
-
-
-    /**
-     * @return a Ellipse of an decreased 'a' times
-     */
-    public Ellipse dec(double a) {
-        return new Ellipse(position, dimension.dec(a));
+        super(new Vector(x, y), new Vector(width, height));
     }
 
     /**
@@ -126,55 +97,19 @@ public class Ellipse {
         return (dist < 0) ? 0.0 : dist;
     }
 
-    /**
-     * @return a center of ellipse
-     */
-    public Vector cnt() {
-        return position.add(dimension.dec(2));
+    @Override
+    public Ellipse mve(Vector position) {
+        return new Ellipse(position, dimension());
     }
 
-    public Vector dimension() {
-        return dimension;
+    @Override
+    public Ellipse inc(double a) {
+        return new Ellipse(position(), dimension().inc(a));
     }
 
-    public Vector position() {
-        return position;
-    }
-
-    public double x() {
-        return position.x();
-    }
-
-    public double y() {
-        return position.y();
-    }
-
-    public double width() {
-        return dimension.x();
-    }
-
-    public double height() {
-        return dimension.y();
-    }
-
-    public int intX() {
-        return position.intX();
-    }
-
-    public int intY() {
-        return position.intY();
-    }
-
-    public int intWidth() {
-        return dimension.intX();
-    }
-
-    public int intHeight() {
-        return dimension.intY();
-    }
-
-    public Rectangle rectangle() {
-        return new Rectangle(position, dimension);
+    @Override
+    public Ellipse dec(double a) {
+        return new Ellipse(position(), dimension().dec(a));
     }
 
     @Override
@@ -182,15 +117,14 @@ public class Ellipse {
         if (this == o) return true;
         if (!(o instanceof Ellipse)) return false;
         Ellipse ellipse = (Ellipse) o;
-        if (position != null ? !position.equals(ellipse.position) : ellipse.position != null) return false;
-        return dimension != null ? dimension.equals(ellipse.dimension) : ellipse.dimension == null;
-
+        if (position() != null ? !position().equals(ellipse.position()) : ellipse.position() != null) return false;
+        return dimension() != null ? dimension().equals(ellipse.dimension()) : ellipse.dimension() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = position != null ? position.hashCode() : 0;
-        result = 31 * result + (dimension != null ? dimension.hashCode() : 0);
+        int result = position() != null ? position().hashCode() : 0;
+        result = 31 * result + (dimension() != null ? dimension().hashCode() : 0);
         return result;
     }
 
