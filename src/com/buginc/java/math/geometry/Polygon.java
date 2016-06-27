@@ -1,7 +1,6 @@
 package com.buginc.java.math.geometry;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 //** ** Created by DeveloperHacker ** **//
 //* https://github.com/DeveloperHacker *//
@@ -29,6 +28,61 @@ public class Polygon extends Figure {
             if (prev.y() < minY) minY = prev.y();
         }
         return new Vector(maxX - minX, maxY - minY);
+    }
+
+    public static Polygon polygon(double[] xPtr, double[] yPtr, int qPtr) {
+        if (xPtr.length != yPtr.length && yPtr.length != qPtr && qPtr < 1) throw new IllegalArgumentException();
+        List<Vector> outline = new LinkedList<>();
+        Vector pos = new Vector(xPtr[0], yPtr[0]);
+        Vector prev = pos;
+        for (int i = 1; i < qPtr; i++) {
+            Vector cur = new Vector(xPtr[i], yPtr[i]);
+            outline.add(cur.rem(prev));
+            prev = cur;
+        }
+        outline.add(pos.rem(prev));
+        return new Polygon(pos, outline);
+    }
+
+    public static Polygon polygon(Vector[] ptr) {
+        if (ptr.length < 1) throw new IllegalArgumentException();
+        List<Vector> outline = new LinkedList<>();
+        Vector pos = ptr[0];
+        Vector prev = pos;
+        for (int i = 1; i < ptr.length; i++) {
+            outline.add(ptr[i].rem(prev));
+            prev = ptr[i];
+        }
+        outline.add(pos.rem(prev));
+        return new Polygon(pos, outline);
+    }
+
+    public static Polygon polygon(double[][] ptr) {
+        if (ptr.length < 1) throw new IllegalArgumentException();
+        List<Vector> outline = new LinkedList<>();
+        Vector pos = new Vector(ptr[0][0], ptr[0][1]);
+        Vector prev = pos;
+        for (int i = 1; i < ptr.length; i++) {
+            if (ptr[i].length != 2) throw new IllegalArgumentException();
+            Vector cur = new Vector(ptr[i][0], ptr[i][1]);
+            outline.add(cur.rem(prev));
+            prev = cur;
+        }
+        outline.add(pos.rem(prev));
+        return new Polygon(pos, outline);
+    }
+
+    public static Polygon polygon(Vector position, Vector[] ptr) {
+        return new Polygon(position, Arrays.asList(ptr));
+    }
+
+    public static Polygon polygon(Vector position, double[][] ptr) {
+        List<Vector> outline = new LinkedList<>();
+        for (double[] vector : ptr) {
+            if (vector.length != 2) throw new IllegalArgumentException();
+            outline.add(new Vector(vector[0], vector[0]));
+        }
+        return new Polygon(position, outline);
     }
 
     public static Polygon rectangle(Vector position, Vector dimension) {
@@ -102,7 +156,7 @@ public class Polygon extends Figure {
     public Polygon rtt(Vector origin, double theta) {
         Vector position = (position().rem(origin)).rtt(theta).add(origin);
         List<Vector> outline = new ArrayList<>();
-        for (Vector vector : outline) outline.add(vector.rtt(theta));
+        for (Vector vector : this.outline) outline.add(vector.rtt(theta));
         return new Polygon(position, outline);
     }
 
