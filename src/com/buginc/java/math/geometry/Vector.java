@@ -122,6 +122,16 @@ public class Vector {
     }
 
     /**
+     * @return the angle between the vectors from 0 to 2 * Pi
+     */
+    public double ang(Vector vector) {
+        double cos = this.cos(vector);
+        double tms = this.tms(vector);
+        double acos = Math.acos(cos);
+        return (tms <= 0) ? acos : Math.PI * 2.0 - acos;
+    }
+
+    /**
      * @return a vector with a length equal to num
      */
     public Vector lng(double length) {
