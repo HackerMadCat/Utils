@@ -83,31 +83,29 @@ public abstract class Figure {
     /**
      * @return the radius of a circle around the right figure with a side of 'a'
      */
-    public static double outRadius(double a, int angles) {
+    public static double rca(double a, int angles) {
         return a / (2.0 * Math.sin(Math.PI / angles));
     }
 
     /**
      * @return the radius of the inscribed circle in the right figure with a side of 'a'
      */
-    public static double inRadius(double a, int angles) {
+    public static double rci(double a, int angles) {
         return a / (2.0 * Math.tan(Math.PI / angles));
     }
 
     /**
-     * @return the dimension of a circle around the right figure with a side of 'a'
+     * @return the length of the sides of the right figure inscribed in a circle of radius 'radius'
      */
-    public static Vector dimOutCircle(double a, int angles) {
-        double r = outRadius(a, angles);
-        return new Vector(2 * r, 2 * r);
+    public static double lfi(double radius, int angles) {
+        return radius * (2.0 * Math.sin(Math.PI / angles));
     }
 
     /**
-     * @return the dimension of the inscribed circle in the right figure with a side of 'a'
+     * @return the length of the sides of the right figure around in a circle of radius 'radius'
      */
-    public static Vector dimInCircle(double a, int angles) {
-        double r = inRadius(a, angles);
-        return new Vector(2 * r, 2 * r);
+    public static double lfa(double radius, int angles) {
+        return radius * (2.0 * Math.tan(Math.PI / angles));
     }
 
     @Override
