@@ -132,4 +132,9 @@ public class Ellipse extends Figure {
     public String toString() {
         return "(" + x() + "; " + y() + "; " + width() + "; " + height() + ")";
     }
+
+    @Override
+    public Figure clone() {
+        return new Ellipse(position(), dimension());
+    }
 }

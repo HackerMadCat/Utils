@@ -61,7 +61,7 @@ public class Rectangle extends Figure {
      * @return true if the rectangles overlap
      */
     public boolean ict(Rectangle rectangle) {
-        return this.dst(rectangle) == 0.0;
+        return this.dff(rectangle).imr();
     }
 
     /**
@@ -112,5 +112,10 @@ public class Rectangle extends Figure {
     @Override
     public String toString() {
         return "(" + x() + "; " + y() + "; " + width() + "; " + height() + ")";
+    }
+
+    @Override
+    public Figure clone() {
+        return new Rectangle(position(), dimension());
     }
 }

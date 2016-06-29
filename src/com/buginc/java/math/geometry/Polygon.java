@@ -7,6 +7,9 @@ import java.util.*;
 
 public class Polygon extends Figure {
 
+    private Boolean convex = null;
+    private Vector center = null;
+
     private final List<Vector> outline;
 
     public Polygon(Vector position, List<Vector> outline) {
@@ -160,6 +163,59 @@ public class Polygon extends Figure {
         return new Polygon(position, outline);
     }
 
+    /**
+     * @return true if the polygon is convex
+     */
+    public boolean cnv() {
+        if (convex != null) return convex;
+        if (outline.size() < 3) return false;
+        double direct = outline.get(outline.size() - 1).tms(outline.get(0));
+        for (int i = 1; i < outline.size(); ++i)
+            if (0 > direct * outline.get(i - 1).tms(outline.get(i))) {
+                convex = false;
+                return false;
+            }
+        convex = true;
+        return true;
+    }
+
+    /**
+     * @return true if the point is inside the polygon
+     */
+    public boolean ins(Vector point) {
+        Vector m = point.rem(position());
+        double direct = 0.0;
+        boolean init = false;
+        for (Vector vector : outline) {
+            double temp = vector.tms(m);
+            m = m.rem(vector);
+            if (temp != 0.0) {
+                if (!init) init = true;
+                else if (direct * temp < 0) return false;
+                direct = temp;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return true if the polygons overlap
+     * if polygon is not convex then the result may be a random
+     */
+    public boolean inc(Polygon polygon) {
+        Vector prev = this.position();
+        for (Vector vector : this.outline) {
+            prev = prev.add(vector);
+            if (polygon.ins(prev)) return true;
+        }
+        prev = polygon.position();
+        for (Vector vector : polygon.outline) {
+            prev = prev.add(vector);
+            if (this.ins(prev)) return true;
+        }
+        return false;
+    }
+
     public List<Vector> outline() {
         return new ArrayList<>(outline);
     }
@@ -190,7 +246,7 @@ public class Polygon extends Figure {
     }
 
     @Override
-    public Vector cnt() {
+    public Vector center() {
         Vector center = new Vector(0, 0);
         int i = outline.size();
         for (Vector vector : outline) {
@@ -220,5 +276,10 @@ public class Polygon extends Figure {
     @Override
     public String toString() {
         return "{ " + position() + ", " + outline + "}";
+    }
+
+    @Override
+    public Figure clone() {
+        return new Polygon(position(), outline);
     }
 }

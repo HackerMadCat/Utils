@@ -6,7 +6,9 @@ public abstract class Figure {
 
     private final Vector dimension;
 
-    protected Figure(Vector position, Vector dimension) {
+    private Vector center = null;
+
+    public Figure(Vector position, Vector dimension) {
         this.position = position;
         this.dimension = dimension;
     }
@@ -61,7 +63,13 @@ public abstract class Figure {
     /**
      * @return a center of figure
      */
-    public Vector cnt() {
+    public final Vector cnt() {
+        if (center != null) return center;
+        center = center();
+        return center;
+    }
+
+    protected Vector center() {
         return position().add(dimension().dec(2.0));
     }
 
@@ -116,4 +124,6 @@ public abstract class Figure {
 
     @Override
     public abstract String toString();
+
+    public abstract Figure clone();
 }
