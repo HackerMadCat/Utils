@@ -54,11 +54,11 @@ public abstract class Figure {
     }
 
     public final boolean higher(double y) {
-        return y() < y;
+        return y() + height() < y;
     }
 
     public final boolean lower(double y) {
-        return y() - height() > y;
+        return y() > y;
     }
 
     public final boolean lefter(double x) {
