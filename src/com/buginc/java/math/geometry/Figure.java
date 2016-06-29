@@ -53,6 +53,22 @@ public abstract class Figure {
         return dimension().intY();
     }
 
+    public final boolean higher(double y) {
+        return y() + height() > y;
+    }
+
+    public final boolean lower(double y) {
+        return y() < y;
+    }
+
+    public final boolean lefter(double x) {
+        return x() < x;
+    }
+
+    public final boolean righter(double x) {
+        return x() + width() > x;
+    }
+
     /**
      * @return the round rectangle of figure
      */
