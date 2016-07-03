@@ -98,8 +98,8 @@ public class Ellipse extends Figure {
     }
 
     @Override
-    public Ellipse mve(Vector position) {
-        return new Ellipse(position, dimension());
+    public Ellipse mve(Vector direct) {
+        return new Ellipse(position().add(direct), dimension());
     }
 
     @Override

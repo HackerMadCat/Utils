@@ -42,4 +42,17 @@ public class PolygonTest {
             }
         }
     }
+
+    @Test
+    public void aroundRectangle() {
+        Polygon polygon = Polygon.rectangle(10, -3, 13, 28);
+        assert polygon.rectangle().equals(new Rectangle(10, -3, 13, 28));
+        polygon = Polygon.polygon(new Vector[]{
+                new Vector(3, 3),
+                new Vector(6, 5),
+                new Vector(5, 10),
+                new Vector(3, 7)
+        });
+        assert polygon.rectangle().equals(new Rectangle(3, 3, 3, 7));
+    }
 }

@@ -61,7 +61,7 @@ public class Rectangle extends Figure {
      * @return true if the rectangles overlap
      */
     public boolean ict(Rectangle rectangle) {
-        return this.dff(rectangle).imr();
+        return !this.dff(rectangle).imr();
     }
 
     /**
@@ -79,8 +79,8 @@ public class Rectangle extends Figure {
     }
 
     @Override
-    public Rectangle mve(Vector position) {
-        return new Rectangle(position, dimension());
+    public Rectangle mve(Vector direct) {
+        return new Rectangle(position().add(direct), dimension());
     }
 
     @Override

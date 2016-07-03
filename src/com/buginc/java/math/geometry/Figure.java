@@ -8,6 +8,11 @@ public abstract class Figure {
 
     private Vector center = null;
 
+    public Figure(Rectangle rect) {
+        this.position = rect.position();
+        this.dimension = rect.dimension();
+    }
+
     public Figure(Vector position, Vector dimension) {
         this.position = position;
         this.dimension = dimension;
@@ -90,9 +95,9 @@ public abstract class Figure {
     }
 
     /**
-     * @return figure moved into the position 'position'
+     * @return figure moved in the direction 'direct'
      */
-    public abstract Figure mve(Vector position);
+    public abstract Figure mve(Vector direct);
 
     /**
      * @return a figure of an increased 'a' times relative to the position
